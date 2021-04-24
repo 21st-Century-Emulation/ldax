@@ -36,6 +36,7 @@ class CpuState {
 
 class Cpu {
   opcode: number;
+  id: String;
   state: CpuState;
 }
 
