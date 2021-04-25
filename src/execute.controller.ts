@@ -66,7 +66,7 @@ export class ExecuteController {
           break;
       }
 
-      const response = await axios.get(`${READ_MEMORY_API}?address=${address}`);
+      const response = await axios.get(`${READ_MEMORY_API}?id=${cpu.id}&address=${address}`);
       cpu.state.a = response.data;
       cpu.state.cycles += 7;
 
