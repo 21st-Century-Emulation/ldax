@@ -32,6 +32,7 @@ class CpuState {
   programCounter: number;
   cycles: number;
   flags: CpuFlags;
+  interruptsEnabled: boolean;
 }
 
 class Cpu {
