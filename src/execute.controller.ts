@@ -7,10 +7,12 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
-import axios from 'axios';
+import got from 'got';
 import { Response } from 'express';
-
+import CacheableLookup from 'cacheable-lookup';
 const { READ_MEMORY_API } = process.env;
+
+const cacheable = new CacheableLookup();
 
 class CpuFlags {
   sign: boolean;
@@ -67,8 +69,8 @@ export class ExecuteController {
           break;
       }
 
-      const response = await axios.get(`${READ_MEMORY_API}?id=${cpu.id}&address=${address}`);
-      cpu.state.a = response.data;
+      const response = await got(`${READ_MEMORY_API}?id=${cpu.id}&address=${address}`, { dnsCache: cacheable });
+      cpu.state.a = parseInt(response.body, 10);
       cpu.state.cycles += 7;
 
       res.status(HttpStatus.OK).send(cpu);
